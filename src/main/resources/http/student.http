@@ -1,0 +1,57 @@
+###Post
+POST localhost:8080/student
+Content-Type: application/json
+
+{
+  "name": "Aslbek",
+  "surname": "Norqulov",
+  "age": "22",
+  "gender": "MALE",
+  "level": "10"
+}
+
+
+### GET student list
+GET localhost:8080/student
+
+### GET Student by id
+GET localhost:8080/student/1
+
+
+### Update studnet by id
+PUT localhost:8080/student/1
+Content-Type: application/json
+
+{
+  "name": "Aslbek",
+  "surname": "Norqulov",
+  "age": "22"
+}
+
+### DELETE student by id
+DELETE localhost:8080/student/1
+
+### Get by name
+GET localhost:8080/student/name?name=Aslbek
+
+### Get by surname
+GET localhost:8080/student/surname?surname=Norqulov
+
+### Get by level
+GET localhost:8080/student/level?level=10
+
+### Get by age
+GET localhost:8080/student/age? age=22
+
+### Get by gender
+GET localhost:8080/student/gender? gender=MALE
+
+### Get by created date
+GET localhost:8080/student/date?createDate=2024-01-13
+
+###Get by Interval date Student
+
+GET localhost:8080/student/interval?from=2024-01-13 & to=2024-01-14
+
+
+

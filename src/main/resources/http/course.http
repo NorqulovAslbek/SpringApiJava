@@ -1,0 +1,42 @@
+############ Post
+POST localhost:8080/course
+Content-Type: application/json
+
+{
+  "name": "Matem",
+  "duration": 12,
+  "price": 12000
+}
+
+############ Get all
+GET localhost:8080/course
+
+
+############ Get by id
+
+GET localhost:8080/course/2
+
+############ Put by id
+PUT localhost:8080/course/2
+Content-Type: application/json
+
+{
+  "name": "Fizika",
+  "duration": 14,
+  "price": 15000
+}
+
+############  Delete by id
+
+DELETE localhost:8080/course/2
+
+
+########### Get by name
+GET  localhost:8080/course/name?name=Fizika
+
+########### Get by price
+GET  localhost:8080/course/price?price=15000
+
+########### Get by duration
+
+GET localhost:8080/course/duration?duration=12
