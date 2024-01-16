@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.PaginationResultDTO;
 import com.example.demo.dto.StudentDTo;
 import com.example.demo.enums.Gender;
 import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -111,4 +113,17 @@ public class StudentController {
     public ResponseEntity<?> getByIntervalDate(@RequestParam LocalDate from, @RequestParam LocalDate to) {
         return ResponseEntity.ok(studentService.getTimeIntervalDate(from, to));
     }
+
+    @GetMapping("/pagination")
+    public ResponseEntity<PageImpl<StudentDTo>> pagination(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                                           @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        return ResponseEntity.ok(studentService.pagination(page, size));
+    }
+
+    @GetMapping("/paginationById")
+    public ResponseEntity<PageImpl<StudentDTo>> paginationById(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                                               @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        return ResponseEntity.ok(studentService.paginationById(page, size));
+    }
+
 }

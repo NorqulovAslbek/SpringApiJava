@@ -1,0 +1,67 @@
+#### Creat StudentCourseMark
+POST localhost:8080/student_course_mark
+Content-Type: application/json
+
+{
+  "courseId": 9,
+  "studentId": 7,
+  "mark": 10
+}
+
+### Update StudentCourseMark
+
+PUT localhost:8080/student_course_mark/1
+Content-Type: application/json
+
+{
+  "mark": 5,
+  "studentId": 6,
+  "courseId": 5
+}
+
+### Get StudentCourseMark by id
+GET localhost:8080/student_course_mark/id?id=9
+
+### Get StudentCourseMark with detail by id
+GET localhost:8080/student_course_mark/with/id?id=5
+
+### Delete StudentCourseMark by id
+DELETE localhost:8080/student_course_mark/id?id=1
+
+### Get StudentCourseMark list
+GET localhost:8080/student_course_mark
+
+###Get studentni berilgan vahtdagi baholari va qaysi fandan olganligi
+GET localhost:8080/student_course_mark/id/date?id=2&localDate=2024-01-14
+
+### Studentning berilgan ikki kundagi olgan bahosi
+GET localhost:8080/student_course_mark/timeInterval ? id=2 & from=2024-01-13 & to=2024-01-14
+
+### get Student Mark Sorted CreatedDate
+GET localhost:8080/student_course_mark/markSortedCreatedDate?id=7
+
+### Studentni berilgan curse dan olgan baxolari vaqt boyicha kamayish tartibida sord qiling.
+GET localhost:8080/student_course_mark/gradeByCourseId?id=3
+
+###Studentni eng oxirda olgan baxosi, va curse nomi.
+GET localhost:8080/student_course_mark/theStudentFinalGrade?id=2
+
+### Studentni olgan eng katta 3ta baxosi.
+GET localhost:8080/student_course_mark/markStudents?id=2
+
+###Studentni eng birinchi olgan baxosi.
+GET localhost:8080/student_course_mark/markStudent?id=4
+
+
+
+
+
+
+
+
+
+
+
+
+
+

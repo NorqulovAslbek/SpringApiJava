@@ -7,7 +7,7 @@ import com.example.demo.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +18,7 @@ public class CourseService {
     private CourseRepository courseRepository;
 
     public CourseDTO create(CourseDTO dto) {
-//        dto.setCreatedDate(LocalDateTime.now());
+        dto.setCreatedDate(LocalDate.now());
         CourseEntity entity = getDtoToEntity(dto);
         courseRepository.save(entity);
         dto.setId(entity.getId());
@@ -48,7 +48,7 @@ public class CourseService {
     }
 
 
-        public boolean deleteStudentById(Integer id) {
+    public boolean deleteStudentById(Integer id) {
         if (courseRepository.existsById(id)) {
             courseRepository.deleteById(id);
             return true;
@@ -80,10 +80,9 @@ public class CourseService {
         return list;
     }
 
-    //////
 
-    public List<CourseDTO> getByPrice(Double price){
-        List<CourseEntity> byPrice=courseRepository.getByPrice(price);
+    public List<CourseDTO> getByPrice(Double price) {
+        List<CourseEntity> byPrice = courseRepository.getByPrice(price);
         List<CourseDTO> list = new LinkedList<>();
         for (CourseEntity courseEntity : byPrice) {
             CourseDTO dto = getEntityToDTO(courseEntity);
@@ -91,9 +90,9 @@ public class CourseService {
         }
         return list;
     }
-    ///////
-    public List<CourseDTO> getByDuration(Integer duration){
-        List<CourseEntity> byDuration=courseRepository.getByDuration(duration);
+
+    public List<CourseDTO> getByDuration(Integer duration) {
+        List<CourseEntity> byDuration = courseRepository.getByDuration(duration);
         List<CourseDTO> list = new LinkedList<>();
         for (CourseEntity courseEntity : byDuration) {
             CourseDTO dto = getEntityToDTO(courseEntity);
@@ -101,6 +100,24 @@ public class CourseService {
         }
         return list;
 
+    }
+
+    public List<CourseDTO> getByPriceInterval(Double price1, Double price2) {
+        List<CourseEntity> byPriceInterval = courseRepository.getByPriceBetween(price1, price2);
+        List<CourseDTO> priceList = new LinkedList<>();
+        for (CourseEntity course : byPriceInterval) {
+            priceList.add(getEntityToDTO(course));
+        }
+        return priceList;
+    }
+
+    public List<CourseDTO> getByCourse(LocalDate from, LocalDate to) {
+        List<CourseEntity> courseEntities = courseRepository.getByCreatedDateBetween(from, to);
+        List<CourseDTO> courseDTOS = new LinkedList<>();
+        for (CourseEntity course : courseEntities) {
+            courseDTOS.add(getEntityToDTO(course));
+        }
+        return courseDTOS;
     }
 
 
@@ -123,4 +140,6 @@ public class CourseService {
         dto.setCreatedDate(entity.getCreatedDate());
         return dto;
     }
+
+
 }

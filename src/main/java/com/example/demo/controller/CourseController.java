@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -68,7 +69,7 @@ public class CourseController {
     /**
      * id orqali update qiluvchi method.
      *
-     * @param id Integer
+     * @param id         Integer
      * @param studentDTO StudentDTO
      * @return ResponseEntity
      */
@@ -85,19 +86,24 @@ public class CourseController {
 
 
     @GetMapping("/price")
-    public ResponseEntity<List<CourseDTO>> getByPrice(@RequestParam Double price){
+    public ResponseEntity<List<CourseDTO>> getByPrice(@RequestParam Double price) {
         return ResponseEntity.ok(courseService.getByPrice(price));
     }
 
     @GetMapping("/duration")
-    public ResponseEntity<List<CourseDTO>> getByDuration(@RequestParam Integer duration){
+    public ResponseEntity<List<CourseDTO>> getByDuration(@RequestParam Integer duration) {
         return ResponseEntity.ok(courseService.getByDuration(duration));
     }
 
-//    @GetMapping("/price")
-//    public ResponseEntity<List<CourseDTO>>getByPrice(@RequestParam Double price1 ,@RequestParam Double price2){
-//
-//    }
+    @GetMapping("/priceInterval")
+    public ResponseEntity<List<CourseDTO>> getByPrice(@RequestParam Double price1, @RequestParam Double price2) {
+        return ResponseEntity.ok(courseService.getByPriceInterval(price1, price2));
+    }
+
+    @GetMapping("/date")
+    public ResponseEntity<List<CourseDTO>> getByDateInterval(@RequestParam LocalDate from, @RequestParam LocalDate to) {
+        return ResponseEntity.ok(courseService.getByCourse(from, to));
+    }
 
 
 }

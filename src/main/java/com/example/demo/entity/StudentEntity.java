@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import com.example.demo.enums.Gender;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.sql.exec.spi.StandardEntityInstanceResolver;

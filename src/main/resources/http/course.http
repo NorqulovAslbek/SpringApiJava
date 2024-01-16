@@ -11,9 +11,7 @@ Content-Type: application/json
 ############ Get all
 GET localhost:8080/course
 
-
 ############ Get by id
-
 GET localhost:8080/course/2
 
 ############ Put by id
@@ -27,9 +25,7 @@ Content-Type: application/json
 }
 
 ############  Delete by id
-
 DELETE localhost:8080/course/2
-
 
 ########### Get by name
 GET  localhost:8080/course/name?name=Fizika
@@ -38,5 +34,11 @@ GET  localhost:8080/course/name?name=Fizika
 GET  localhost:8080/course/price?price=15000
 
 ########### Get by duration
-
 GET localhost:8080/course/duration?duration=12
+
+### GET by price interval
+GET  localhost:8080/course/priceInterval?price1=13000&price2=16000
+
+### Get by date interval
+
+GET localhost:8080/course/date?from=2024-01-14 & to=2024-01-16

@@ -1,11 +1,13 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.PaginationResultDTO;
 import com.example.demo.dto.StudentDTo;
 import com.example.demo.entity.StudentEntity;
 import com.example.demo.enums.Gender;
 import com.example.demo.exp.AppBadException;
 import com.example.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -200,7 +203,6 @@ public class StudentService {
      * @return StudentDTO
      */
     private StudentDTo getEntityToDTO(StudentEntity entity) {
-
         StudentDTo dto = new StudentDTo();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
@@ -210,6 +212,106 @@ public class StudentService {
         dto.setGender(entity.getGender());
         dto.setCreatedDate(entity.getCreatedDate());
         return dto;
+    }
+
+    public PageImpl<StudentDTo> pagination(Integer page, Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdDate"); // vaqti bo'yicha sort qilib beradi. eng oxirida qo'yilganini birinchi chiqarb beradi.
+        return sortByPage(page, size, sort);
+    }
+
+    public PageImpl<StudentDTo> paginationById(Integer page, Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        return sortByPage(page, size, sort);
+    }
+
+    private PageImpl<StudentDTo> sortByPage(Integer page, Integer size, Sort sort) {
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+        Page<StudentEntity> studentPage = studentRepository.findAll(pageable);
+        List<StudentEntity> entities = studentPage.getContent();
+        long totalElements = studentPage.getTotalElements();
+        List<StudentDTo> dToList = new LinkedList<>();
+        for (StudentEntity entity : entities) {
+            dToList.add(getEntityToDTO(entity));
+        }
+        return new PageImpl<>(dToList, pageable, totalElements);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public List<StudentDTo> getAllByNameWithSort() {
+        studentRepository.findAllByName("Ali", Sort.by(Sort.Direction.DESC));
+        studentRepository.findAll(Sort.by(Sort.Direction.DESC, "surname"));
+        return null;
+    }
+
+    public void testQuery() {
+        studentRepository.findByName1("Alish");
+        studentRepository.findByName2("Alish", "Asl", 10);
+        studentRepository.getShortInfo();
+
+        studentRepository.findByNameWithSort("Ali", "Aliyev",
+                Sort.by(Sort.Direction.DESC, "age"));
     }
 
 
