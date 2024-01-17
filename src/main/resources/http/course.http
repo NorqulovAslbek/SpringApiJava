@@ -42,3 +42,15 @@ GET  localhost:8080/course/priceInterval?price1=13000&price2=16000
 ### Get by date interval
 
 GET localhost:8080/course/date?from=2024-01-14 & to=2024-01-16
+
+### Student pagination
+GET localhost:8080/course/pagination?page=2&size=2
+
+### Course Pagination. List should be sorted by createdDate.
+GET localhost:8080/course/pagination/createdDate?page=1&size=20
+
+###	Course Pagination by price. List should be sorted by createdDate.
+GET localhost:8080/course/pricePage?price=15000&page=1&size=3
+
+###	Course Pagination by price between. List should be sorted by createdDate.
+GET localhost:8080/course/pricePageBetween ? price1=5000 & price2=20000 &page=1 & size=10

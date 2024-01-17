@@ -46,16 +46,16 @@ StudentCourseMark
 	9. Studentni olgan barcha baxolari vaqt boyicha kamayish tartibida sord qiling.
 	10. Studentni berilgan curse dan olgan baxolari vaqt boyicha kamayish tartibida sord qiling.
 	11. Studentni eng oxirda olgan baxosi, va curse nomi.
-	12. Studentni olgan eng katta 3ta baxosi.
-	13. Studentni eng birinchi olgan baxosi.
-	14. Studenti eng berilgan course dan olgan birinchi baxosi.
-	15. Studentni berilgan cuorse dan olgan eng baland baxosi.
-	16. Studentni o'rtacha olgan baxolari.
-	17. Studentni berilgan curse dan olgan o'rtacha baxolari.
-	18. Studentni berilgan baxodan katta bo'lgan baxolari soni.
-	19. Berilgan Cursdan eng baland baxo.
-	20. Berilgan Cursdan o'lingan o'rtacha baxo.
-	21. Berilgan Course dan olingna baxolar soni.
+	                12. Studentni olgan eng katta 3ta baxosi.
+	                13. Studentni eng birinchi olgan baxosi.
+	                14. Studenti eng berilgan course dan olgan birinchi baxosi.
+	                15. Studentni berilgan cuorse dan olgan eng baland baxosi.
+	                16. Studentni o'rtacha olgan baxolari.
+	                17. Studentni berilgan curse dan olgan o'rtacha baxolari.
+	                18. Studentni berilgan baxodan katta bo'lgan baxolari soni.
+	                19. Berilgan Cursdan eng baland baxo.
+	                20. Berilgan Cursdan o'lingan o'rtacha baxo.
+	                21. Berilgan Course dan olingna baxolar soni.
 	22. StudentCourseMark pagination.
 	23. StudentCourseMark pagination by given studentId. List should be sorted by createdDate.
 	24. StudentCourseMark pagination by given courseId.  List should be sorted by createdDate.

@@ -216,19 +216,38 @@ public class StudentService {
 
     public PageImpl<StudentDTo> pagination(Integer page, Integer size) {
         Sort sort = Sort.by(Sort.Direction.DESC, "createdDate"); // vaqti bo'yicha sort qilib beradi. eng oxirida qo'yilganini birinchi chiqarb beradi.
-        return sortByPage(page, size, sort);
-    }
-
-    public PageImpl<StudentDTo> paginationById(Integer page, Integer size) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        return sortByPage(page, size, sort);
-    }
-
-    private PageImpl<StudentDTo> sortByPage(Integer page, Integer size, Sort sort) {
         Pageable pageable = PageRequest.of(page - 1, size, sort);
         Page<StudentEntity> studentPage = studentRepository.findAll(pageable);
         List<StudentEntity> entities = studentPage.getContent();
         long totalElements = studentPage.getTotalElements();
+        List<StudentDTo> dToList = new LinkedList<>();
+        for (StudentEntity entity : entities) {
+            dToList.add(getEntityToDTO(entity));
+        }
+        return new PageImpl<>(dToList, pageable, totalElements);
+    }
+
+    public PageImpl<StudentDTo> sortedPageByLevel(String level, Integer page, Integer size) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+        Page<StudentEntity> studentPage = studentRepository.findByLevel(level, pageable);
+        List<StudentEntity> entities = studentPage.getContent();
+        long totalElements = studentPage.getTotalElements();
+        List<StudentDTo> dToList = new LinkedList<>();
+        for (StudentEntity entity : entities) {
+            dToList.add(getEntityToDTO(entity));
+        }
+        return new PageImpl<>(dToList, pageable, totalElements);
+    }
+
+    public PageImpl<StudentDTo> sortedByGenderPage(Gender gender, Integer page, Integer size) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "createdDate");
+        Pageable pageable = PageRequest.of(size - 1, page, sort);
+//        Gender gender1 = Gender.valueOf(gender);
+        Page<StudentEntity> byGender = studentRepository.findByGender(gender, pageable);
+        long totalElements = byGender.getTotalElements();
+        List<StudentEntity> entities = byGender.getContent();
+
         List<StudentDTo> dToList = new LinkedList<>();
         for (StudentEntity entity : entities) {
             dToList.add(getEntityToDTO(entity));
@@ -262,57 +281,20 @@ public class StudentService {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public List<StudentDTo> getAllByNameWithSort() {
-        studentRepository.findAllByName("Ali", Sort.by(Sort.Direction.DESC));
-        studentRepository.findAll(Sort.by(Sort.Direction.DESC, "surname"));
-        return null;
-    }
-
-    public void testQuery() {
-        studentRepository.findByName1("Alish");
-        studentRepository.findByName2("Alish", "Asl", 10);
-        studentRepository.getShortInfo();
-
-        studentRepository.findByNameWithSort("Ali", "Aliyev",
-                Sort.by(Sort.Direction.DESC, "age"));
-    }
+//    public List<StudentDTo> getAllByNameWithSort() {
+//        studentRepository.findAllByName("Ali", Sort.by(Sort.Direction.DESC));
+//        studentRepository.findAll(Sort.by(Sort.Direction.DESC, "surname"));
+//        return null;
+//    }
+//
+//    public void testQuery() {
+//        studentRepository.findByName1("Alish");
+//        studentRepository.findByName2("Alish", "Asl", 10);
+//        studentRepository.getShortInfo();
+//
+//        studentRepository.findByNameWithSort("Ali", "Aliyev",
+//                Sort.by(Sort.Direction.DESC, "age"));
+//    }
 
 
 }

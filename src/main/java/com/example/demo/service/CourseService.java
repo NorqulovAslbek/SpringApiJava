@@ -5,6 +5,7 @@ import com.example.demo.entity.CourseEntity;
 import com.example.demo.exp.AppBadException;
 import com.example.demo.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -118,6 +119,63 @@ public class CourseService {
             courseDTOS.add(getEntityToDTO(course));
         }
         return courseDTOS;
+    }
+
+
+    public PageImpl<CourseDTO> getByIdCoursePagination(Integer page, Integer size) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+        Page<CourseEntity> entities = courseRepository.findAll(pageable);
+        List<CourseEntity> content = entities.getContent();
+        long totalSize = entities.getTotalElements();
+
+        List<CourseDTO> list = new LinkedList<>();
+        for (CourseEntity entity : content) {
+            list.add(getEntityToDTO(entity));
+        }
+        return new PageImpl<>(list, pageable, totalSize);
+    }
+
+    public PageImpl<CourseDTO> getByCreatedDatePagination(Integer page, Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdDate");
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+        Page<CourseEntity> all = courseRepository.findAll(pageable);
+        long totalSize = all.getTotalElements();
+        List<CourseEntity> content = all.getContent();
+        List<CourseDTO> list = new LinkedList<>();
+        for (CourseEntity course : content) {
+            list.add(getEntityToDTO(course));
+        }
+        return new PageImpl<>(list, pageable, totalSize);
+    }
+
+
+    public PageImpl<CourseDTO> getByPricePagination(Double price, Integer page, Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdDate"); //
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+        Page<CourseEntity> byPrice = courseRepository.getByPrice(price, pageable);
+
+        long totalSize = byPrice.getTotalElements();
+        List<CourseEntity> courseEntities = byPrice.getContent();
+
+        List<CourseDTO> dtoList = new LinkedList<>();
+        for (CourseEntity courseEntity : courseEntities) {
+            dtoList.add(getEntityToDTO(courseEntity));
+        }
+        return new PageImpl<>(dtoList, pageable, totalSize);
+    }
+
+    public PageImpl<CourseDTO> getByPriceBetweenPagination(Double price1, Double price2, Integer page, Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdDate");
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+        Page<CourseEntity> byPriceBetween = courseRepository.getByPriceBetween(price1, price2, pageable);
+        long totalSize = byPriceBetween.getTotalElements();
+        List<CourseEntity> byPriceBetweenContent = byPriceBetween.getContent();
+        List<CourseDTO> list = new LinkedList<>();
+        for (CourseEntity courseEntity : byPriceBetweenContent) {
+            list.add(getEntityToDTO(courseEntity));
+        }
+        return new PageImpl<>(list, pageable, totalSize);
     }
 
 

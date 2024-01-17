@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.StudentCourseMarkDTO;
 import com.example.demo.service.StudentCourseMarkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,9 +78,21 @@ public class StudentCourseMarkController {
     public ResponseEntity<List<StudentCourseMarkDTO>> getMarkStudents(@RequestParam("id") Integer id) {
         return ResponseEntity.ok(studentCourseMarkService.getMarkStudents(id));
     }
+
     @GetMapping("/markStudent")
     public ResponseEntity<StudentCourseMarkDTO> getMarkStudent(@RequestParam("id") Integer id) {
         return ResponseEntity.ok(studentCourseMarkService.getMarkStudent(id));
     }
+
+    @GetMapping("/pagination")
+    public ResponseEntity<PageImpl<StudentCourseMarkDTO>> getStudentMarkPage(@RequestParam Integer page, @RequestParam Integer size) {
+        return ResponseEntity.ok(studentCourseMarkService.getPagination(page, size));
+    }
+
+    @GetMapping("/paginationById")
+    public ResponseEntity<PageImpl<StudentCourseMarkDTO>> getStudentMarkPage(@RequestParam Integer id, @RequestParam Integer page, @RequestParam Integer size) {
+        return ResponseEntity.ok(studentCourseMarkService.getByIdPagination(id,page, size));
+    }
+
 
 }

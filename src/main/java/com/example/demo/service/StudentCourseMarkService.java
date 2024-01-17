@@ -11,6 +11,7 @@ import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.StudentCourseMarkRepository;
 import com.example.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -31,6 +32,10 @@ public class StudentCourseMarkService {
     private StudentRepository studentRepository;
 
     public StudentCourseMarkDTO create(StudentCourseMarkDTO dto) {
+        if (!studentRepository.existsById(dto.getStudentId())
+                || !courseRepository.existsById(dto.getCourseId())) {
+            throw new AppBadException("not found!");
+        }
         var entity = studentCourseMarkRepository.save(getEntity(dto));
         return getDTOWithDetail(entity);
     }
@@ -106,7 +111,7 @@ public class StudentCourseMarkService {
         StudentEntity student = new StudentEntity();
         student.setId(id);
         List<StudentCourseMarkEntity> byStudentIdAndCreatedDateBetween =
-                studentCourseMarkRepository.findByStudentIdAndCreatedDateBetween(student, fromTime, toTime);
+                studentCourseMarkRepository.findByStudentIdAndCreatedDateBetween1(student, fromTime, toTime);
         for (StudentCourseMarkEntity entity : byStudentIdAndCreatedDateBetween) {
             markDTOList.add(getDTOWithDetail(entity));
         }
@@ -187,6 +192,37 @@ public class StudentCourseMarkService {
 
         StudentCourseMarkEntity entity1 = orderByMarkDesc.get();
         return getDTOWithDetail(entity1);
+    }
+
+
+    public PageImpl<StudentCourseMarkDTO> getPagination(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<StudentCourseMarkEntity> all = studentCourseMarkRepository.findAll(pageable);
+        long totalElements = all.getTotalElements();
+        List<StudentCourseMarkEntity> content = all.getContent();
+        List<StudentCourseMarkDTO> list = new LinkedList<>();
+
+        for (StudentCourseMarkEntity entity : content) {
+            list.add(getDTOWithDetail(entity));
+        }
+        return new PageImpl<>(list, pageable, totalElements);
+    }
+
+
+    public PageImpl<StudentCourseMarkDTO> getByIdPagination(Integer studentId, Integer page, Integer size) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "createdDate");
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+        StudentEntity student = new StudentEntity();
+        student.setId(studentId);
+        Page<StudentCourseMarkEntity> byStudentPage = studentCourseMarkRepository.findByStudentId(student, pageable);
+        long totalElements = byStudentPage.getTotalElements();
+        List<StudentCourseMarkEntity> studentPageContent = byStudentPage.getContent();
+        List<StudentCourseMarkDTO> list = new LinkedList<>();
+        for (StudentCourseMarkEntity entity : studentPageContent) {
+            list.add(getDTOWithDetail(entity));
+        }
+        return new PageImpl<>(list,pageable,totalElements);
+
     }
 
 

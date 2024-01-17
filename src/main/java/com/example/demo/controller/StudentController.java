@@ -120,10 +120,15 @@ public class StudentController {
         return ResponseEntity.ok(studentService.pagination(page, size));
     }
 
-    @GetMapping("/paginationById")
-    public ResponseEntity<PageImpl<StudentDTo>> paginationById(@RequestParam(value = "page", defaultValue = "1") Integer page,
+    @GetMapping("/paginationByLevel")
+    public ResponseEntity<PageImpl<StudentDTo>> paginationByLevel(@RequestParam String level,@RequestParam(value = "page", defaultValue = "1") Integer page,
                                                                @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        return ResponseEntity.ok(studentService.paginationById(page, size));
+        return ResponseEntity.ok(studentService.sortedPageByLevel(level,page, size));
     }
 
+    @GetMapping("/paginationByGender")
+    public ResponseEntity<PageImpl<StudentDTo>> paginationSortedByGender(@RequestParam Gender gender,@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                                                  @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        return ResponseEntity.ok(studentService.sortedByGenderPage(gender,page, size));
+    }
 }

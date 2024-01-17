@@ -4,6 +4,7 @@ import com.example.demo.dto.CourseDTO;
 
 import com.example.demo.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -105,5 +106,23 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getByCourse(from, to));
     }
 
+    @GetMapping("/pagination")
+    public ResponseEntity<PageImpl<CourseDTO>> getPagination(@RequestParam Integer page, @RequestParam Integer size) {
+        return ResponseEntity.ok(courseService.getByIdCoursePagination(page, size));
+    }
 
+    @GetMapping("/pagination/createdDate")
+    public ResponseEntity<PageImpl<CourseDTO>> getByCreatedDatePagination(@RequestParam Integer page, @RequestParam Integer size) {
+        return ResponseEntity.ok(courseService.getByCreatedDatePagination(page, size));
+    }
+
+    @GetMapping("/pricePage")
+    public ResponseEntity<PageImpl<CourseDTO>> getByPricePagination(@RequestParam Double price, @RequestParam Integer page, @RequestParam Integer size) {
+        return ResponseEntity.ok(courseService.getByPricePagination(price, page, size));
+    }
+
+    @GetMapping("/pricePageBetween")
+    public ResponseEntity<PageImpl<CourseDTO>> getByPricePaginationBetween(@RequestParam Double price1, @RequestParam Double price2, @RequestParam Integer page, @RequestParam Integer size) {
+        return ResponseEntity.ok(courseService.getByPriceBetweenPagination(price1, price2, page, size));
+    }
 }
