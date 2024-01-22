@@ -36,5 +36,15 @@ public interface StudentCourseMarkRepository extends JpaRepository<StudentCourse
     @Query("FROM StudentCourseMarkEntity WHERE studentId=?1 ")
     Page<StudentCourseMarkEntity> findByStudentId(StudentEntity studentId, Pageable pageable);
 
+    @Query("SELECT scm.id," +
+            "scm.mark," +
+            "scm.createdDate," +
+            "scm.courseId.id," +
+            "scm.courseId.name," +
+            "scm.courseId.name" +
+            " FROM StudentCourseMarkEntity as scm" +
+            " where scm.studentId.id=?1")
+    List<StudentCourseMarkEntity> getStudentCourseMark(Integer id);
+
 
 }

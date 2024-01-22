@@ -91,7 +91,12 @@ public class StudentCourseMarkController {
 
     @GetMapping("/paginationById")
     public ResponseEntity<PageImpl<StudentCourseMarkDTO>> getStudentMarkPage(@RequestParam Integer id, @RequestParam Integer page, @RequestParam Integer size) {
-        return ResponseEntity.ok(studentCourseMarkService.getByIdPagination(id,page, size));
+        return ResponseEntity.ok(studentCourseMarkService.getByIdPagination(id, page, size));
+    }
+
+    @GetMapping("/studentMark")
+    public ResponseEntity<List<StudentCourseMarkDTO>> getStudentMark(@RequestParam Integer id) {
+        return ResponseEntity.ok(studentCourseMarkService.getByStudentCourseMark(id));
     }
 
 

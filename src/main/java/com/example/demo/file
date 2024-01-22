@@ -59,6 +59,24 @@ StudentCourseMark
 	22. StudentCourseMark pagination.
 	23. StudentCourseMark pagination by given studentId. List should be sorted by createdDate.
 	24. StudentCourseMark pagination by given courseId.  List should be sorted by createdDate.
+
+             -- quyidagi api larni join lar bilan ishlang.
+   25. Berilgan studentId-si orqali u olgan baxolari ro'yhatini return qiling.
+       Service quyidagi ma'lumotlar return qilinishi kerak.
+       studentCourse{id,mark,createdDate,course{id,name,title} }
+
+   26. Berilgan Cours-ning id-si orqali undan olingna baxolarni return qiling.
+       Service quyidagi ma'lumotlar return qilinishi kerak.
+       studentCourse{id,mark,createdDate, student{id,name,surname} }
+
+   27. Xar bir olingan baxo, kurs ma'lumot, student ma'lumotini retunr qiladigna method yozing.
+      Service quyidagi ma'lumotlar return qilinishi kerak.
+              	    studentCourse{
+              	           id,mark,createdDate,
+              	           student{id,name,surname},
+              	            course{id,title}
+              	        }
+
     25. Filter with pagination. Filter items (studentId,courseId,markFrom, markTo,createdDateFrom,createdDateTo,
             studentName, courseName)
 

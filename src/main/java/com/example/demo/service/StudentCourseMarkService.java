@@ -221,10 +221,19 @@ public class StudentCourseMarkService {
         for (StudentCourseMarkEntity entity : studentPageContent) {
             list.add(getDTOWithDetail(entity));
         }
-        return new PageImpl<>(list,pageable,totalElements);
+        return new PageImpl<>(list, pageable, totalElements);
 
     }
 
+    public List<StudentCourseMarkDTO> getByStudentCourseMark(Integer id) {
+        if (!studentRepository.existsById(id)) throw new AppBadException("Not fount student");
+        List<StudentCourseMarkEntity> studentCourseMark = studentCourseMarkRepository.getStudentCourseMark(id);
+        List<StudentCourseMarkDTO> list = new LinkedList<>();
+        for (StudentCourseMarkEntity entity : studentCourseMark) {
+            list.add(getDTOWithDetail(entity));
+        }
+        return list;
+    }
 
     private StudentCourseMarkDTO getDTO(StudentCourseMarkEntity entity) {
         var dto = new StudentCourseMarkDTO();

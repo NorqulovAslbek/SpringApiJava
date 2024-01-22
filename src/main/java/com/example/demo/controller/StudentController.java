@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.PaginationResultDTO;
 import com.example.demo.dto.StudentDTo;
+import com.example.demo.dto.StudentFilterDTO;
 import com.example.demo.enums.Gender;
 import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,4 +132,13 @@ public class StudentController {
                                                                   @RequestParam(value = "size", defaultValue = "10") Integer size) {
         return ResponseEntity.ok(studentService.sortedByGenderPage(gender,page, size));
     }
+
+    @PostMapping("/filter")
+    public ResponseEntity<PageImpl<StudentDTo>> create(@RequestBody StudentFilterDTO dto,
+                                                       @RequestParam(value = "page", defaultValue = "1") Integer page,
+                                                       @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        PageImpl<StudentDTo> result = studentService.filter(dto, page, size);
+        return ResponseEntity.ok(result);
+    }
+
 }

@@ -65,6 +65,18 @@ GET localhost:8080/student/paginationByLevel?level=10 & size=3 & page=2
 ### Pagination by given gender.  List should be sorted by createdDate.
 GET localhost:8080/student/paginationByGender?gender=MALE & size=1 &page=2
 
+### filter
+### filter
+POST localhost:8080/student/filter?page=2&size=4
+Content-Type: application/json
+
+{
+
+}
+
+
+
+
 
 
 

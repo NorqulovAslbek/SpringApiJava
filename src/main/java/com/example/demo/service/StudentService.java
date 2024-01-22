@@ -2,9 +2,12 @@ package com.example.demo.service;
 
 import com.example.demo.dto.PaginationResultDTO;
 import com.example.demo.dto.StudentDTo;
+import com.example.demo.dto.StudentFilterDTO;
 import com.example.demo.entity.StudentEntity;
 import com.example.demo.enums.Gender;
 import com.example.demo.exp.AppBadException;
+import com.example.demo.mapper.StudentMapper;
+import com.example.demo.repository.StudentCustomRepository;
 import com.example.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -22,6 +25,8 @@ import java.util.Optional;
 public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private StudentCustomRepository studentCustomRepository;
 
     /**
      * Bu method bizga student malumotlarini data base ga
@@ -256,29 +261,48 @@ public class StudentService {
     }
 
 
+    public boolean update2(Integer id, StudentDTo dTo) {
+        int effectedRows = studentRepository.updateStudent(dTo.getName(), dTo.getSurname(), id);
+        return true;
+    }
+
+    public PageImpl<StudentDTo> filter(StudentFilterDTO filter, int page, int size) {
+        PaginationResultDTO<StudentEntity> paginationResult = studentCustomRepository.filter(filter, page, size);
+
+        List<StudentDTo> dtoList = new LinkedList<>();
+        for (StudentEntity entity : paginationResult.getList()) {
+            dtoList.add(getEntityToDTO(entity));
+        }
+
+        Pageable paging = PageRequest.of(page - 1, size);
+        return new PageImpl<>(dtoList, paging, paginationResult.getTotalSize());
+    }
 
 
+    public void test() {
+//        List<Object[]> objectList = studentRepository.getShortInfo1();
+//        List<StudentDTo> dtoList = new LinkedList<>();
+//        for (Object[] obj : objectList) {
+//            StudentDTo dto = new StudentDTo();
+//            dto.setId((Integer) obj[0]);
+//            dto.setName((String) obj[1]);
+//            dto.setSurname((String) obj[2]);
+//            dtoList.add(dto);
+//        }
+//        System.out.println(dtoList);
 
+        List<StudentMapper> mapperList = studentRepository.joinExample12();
+        List<StudentDTo> dtoList = new LinkedList<>();
+        for (StudentMapper mapper : mapperList) {
+            StudentDTo dto = new StudentDTo();
+            dto.setId(mapper.getId());
+            dto.setName(mapper.getName());
+            dto.setSurname(mapper.getSurname());
+            dtoList.add(dto);
+        }
+        System.out.println();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 
 
 //    public List<StudentDTo> getAllByNameWithSort() {

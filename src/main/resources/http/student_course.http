@@ -58,7 +58,8 @@ GET localhost:8080/student_course_mark/pagination?page=1 & size=3
 ###StudentCourseMark pagination by given studentId. List should be sorted by createdDate.
 GET localhost:8080/student_course_mark/paginationById ?id=4 & page=1 & size=3
 
-
+###StudentCourseMark pagination by given studentId. List should be sorted by createdDate.
+GET localhost:8080/student_course_mark/studentMark ? id=3
 
 
 

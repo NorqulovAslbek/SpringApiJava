@@ -9,6 +9,7 @@ import org.hibernate.sql.exec.spi.StandardEntityInstanceResolver;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,5 +25,15 @@ public class StudentEntity {
     private String age;
     private Gender gender;
     private LocalDateTime createdDate;
+//    @OneToMany(mappedBy = "student")
+//    private List<StudentEntity> scmList;
+    public StudentEntity() {
+    }
+
+    public StudentEntity(Integer id, String name, String surname) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+    }
 }
 
